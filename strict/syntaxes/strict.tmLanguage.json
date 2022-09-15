@@ -1,0 +1,56 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "STRICT programming language",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#TopLevelDeclarations"
+		},
+		{
+			"include": "#Code"
+		},
+		{
+			"include": "#strings"
+		},
+    {
+			"include": "#Comment"
+		},
+    {
+      "include": "#Statements"
+    },
+    {
+      "include": "#Expressions"
+    },
+    {
+      "include": "#Assignment"
+    }
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.strict",
+				"match": "\\b(if|while|for|return)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.strict",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.strict",
+					"match": "\\\\."
+				}
+			]
+		},
+		"Assignment": {
+			"patterns": [{
+			  "name": "keyword.control.strict",
+			  "match": "\\b([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\=)\\b"
+			}]
+		  }
+	},
+	"scopeName": "source.strict"
+}
