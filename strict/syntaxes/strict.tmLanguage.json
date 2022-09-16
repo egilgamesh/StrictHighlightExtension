@@ -1,22 +1,22 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "STRICT programming language",
-	"patterns": [
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#TopLevelDeclarations"
-		},
-		{
-			"include": "#Code"
-		},
-		{
-			"include": "#strings"
-		},
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "STRICT programming language",
+  "patterns": [
     {
-			"include": "#Comment"
-		},
+      "include": "#keywords"
+    },
+    {
+      "include": "#TopLevelDeclarations"
+    },
+    {
+      "include": "#Code"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#Comment"
+    },
     {
       "include": "#Statements"
     },
@@ -26,31 +26,78 @@
     {
       "include": "#Assignment"
     }
-	],
-	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.strict",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
-		},
-		"strings": {
-			"name": "string.quoted.double.strict",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-				{
-					"name": "constant.character.escape.strict",
-					"match": "\\\\."
-				}
-			]
-		},
-		"Assignment": {
-			"patterns": [{
-			  "name": "keyword.control.strict",
-			  "match": "\\b([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\=)\\b"
-			}]
-		  }
-	},
-	"scopeName": "source.strict"
+  ],
+  "repository": {
+          "TopLevelDeclarations": {
+      "patterns": [
+        { 
+          "include": "#Comment"
+        },
+       {
+         "include": "#ClassSpecific"
+       },
+       {
+         "include": "#MethodDeclaration"
+       },
+       {
+        "include": "#FactoryDeclaration"
+       },
+       {
+        "include": "#Throws"
+       },
+       {
+        "include": "#LetBinding"
+       },
+       {
+        "include": "#Code"
+       }    
+       ]
+      },
+      "Code" : {
+
+      }
+    "keywords": {
+      "patterns": [{
+        "name": "keyword.control.strict",
+        "match": "\\b(if|else|for|to|from|in|has|is|do|stream)\\b"
+      }]
+    },
+    "strings": {
+      "name": "string.quoted.double.strict",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.strict",
+          "match": "\\\\."
+        }
+      ]
+    },
+      "expression": {
+      "patterns": [
+        { 
+          "include": "#letter"
+        },
+       {
+         "include": "#paren-expression"
+       }]
+      },
+      "letter": {
+      "match": "a|b|c",
+      "name": "keyword.letter"
+      },
+      "paren-expression": {
+      "begin": "\\(",
+      "end": "\\)",
+      "beginCaptures": {
+        "0": { "name": "punctuation.paren.open" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.paren.close" }
+      },
+      "name": "expression.group",
+      "patterns": [{ "include": "#expression" }]
+      }
+  },
+  "scopeName": "source.strict"
 }

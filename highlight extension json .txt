@@ -1,0 +1,880 @@
+{
+  "name": "strict",
+  "scope": "source.strict",
+  "file_extensions": [
+    "strict"
+  ],
+  "contexts": {
+    "main": [
+      {
+        "include": "TopLevelDeclarations"
+      },
+      {
+        "include": "FieldDeclaration"
+      },
+      {
+        "include": "Code"
+      },
+      {
+        "match": "([^\\s])",
+        "captures": {
+          "0": "invalid.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "TopLevelDeclarations": [
+      {
+        "include": "Comment"
+      },
+      {
+        "include": "ClassSpecific"
+      },
+      {
+        "include": "MethodDeclaration"
+      },
+      {
+        "include": "FactoryDeclaration"
+      },
+      {
+        "include": "Throws"
+      },
+      {
+        "include": "LetBinding"
+      },
+      {
+        "include": "Code"
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Code": [
+      {
+        "include": "Comment"
+      },
+      {
+        "include": "Statements"
+      },
+      {
+        "include": "Expressions"
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Throws": [
+      {
+        "match": "(throws)(\\s+)",
+        "captures": {
+          "0": "keyword.other.strict",
+          "1": "none.strict"
+        },
+        "push": [
+          {
+            "match": "(^(?=.{0,1})(?:|))",
+            "pop": true,
+            "captures": {
+              "0": "none.strict"
+            }
+          },
+          {
+            "match": "([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)",
+            "captures": {
+              "0": "entity.name.type.strict"
+            }
+          },
+          {
+            "match": "(\\,)",
+            "captures": {
+              "0": "none.strict"
+            }
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "ClassSpecific": [
+      {
+        "match": "(implement)(\\s+)([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict"
+        }
+      },
+      {
+        "match": "(generic)(\\s+)([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)(\\s+)(is)(\\s+)([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict",
+          "3": "none.strict",
+          "4": "keyword.declaration.strict",
+          "5": "none.strict",
+          "6": "entity.name.type.strict"
+        }
+      },
+      {
+        "match": "(generic)(\\s+)([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "FieldDeclaration": [
+      {
+        "match": "([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)",
+        "captures": {
+          "0": "entity.name.type.strict",
+          "1": "none.strict",
+          "2": "variable.other.member.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "ParameterList": [
+      {
+        "match": "(\\,)",
+        "captures": {
+          "0": "punctuation.strict"
+        }
+      },
+      {
+        "match": "([a-zA-Z]+[a-zA-Z0-9_]*)(\\s+)([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)",
+        "captures": {
+          "0": "variable.parameter.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict"
+        }
+      },
+      {
+        "match": "([a-zA-Z]+[a-zA-Z0-9_]*)",
+        "captures": {
+          "0": "variable.parameter.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "FactoryDeclaration": [
+      {
+        "match": "(factory)(\\s*)([a-zA-Z]*[a-zA-Z0-9_]*)(\\s*)(\\()",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.function.strict",
+          "3": "none.strict",
+          "4": "punctuation.strict"
+        },
+        "push": [
+          {
+            "match": "(\\))",
+            "pop": true,
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "include": "ParameterList"
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(factory)(\\s+)(?:([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)?)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict",
+          "3": "none.strict",
+          "4": "entity.name.function.strict"
+        }
+      },
+      {
+        "match": "(factory)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.function.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "MethodDeclaration": [
+      {
+        "match": "(method)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\()",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.function.strict",
+          "3": "none.strict",
+          "4": "punctuation.strict"
+        },
+        "push": [
+          {
+            "match": "(\\))",
+            "pop": true,
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "include": "ParameterList"
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(method)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\()",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.function.strict",
+          "3": "none.strict",
+          "4": "punctuation.strict"
+        },
+        "push": [
+          {
+            "match": "(\\))",
+            "pop": true,
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "include": "ParameterList"
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(returns)(\\s*)([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict"
+        }
+      },
+      {
+        "match": "(method)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "entity.name.function.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Statements": [
+      {
+        "include": "Loops"
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Loops": [
+      {
+        "include": "ForEachLoop"
+      },
+      {
+        "include": "FromToLoop"
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "ForEachLoop": [
+      {
+        "match": "(for)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s+)(in)(\\s+)",
+        "captures": {
+          "0": "keyword.control.strict",
+          "1": "none.strict",
+          "2": "variable.strict",
+          "3": "none.strict",
+          "4": "keyword.control.strict",
+          "5": "none.strict"
+        },
+        "push": [
+          {
+            "match": "(^)",
+            "pop": true,
+            "captures": {
+              "0": "keyword.control.strict"
+            }
+          },
+          {
+            "include": "Code"
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "FromToLoop": [
+      {
+        "match": "(for)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s+)(from)(\\s+)",
+        "captures": {
+          "0": "keyword.control.strict",
+          "1": "none.strict",
+          "2": "variable.strict",
+          "3": "none.strict",
+          "4": "keyword.control.strict",
+          "5": "none.strict"
+        },
+        "push": [
+          {
+            "match": "(^)",
+            "pop": true,
+            "captures": {
+              "0": "keyword.control.strict"
+            }
+          },
+          {
+            "include": "Code"
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "LetBinding": [
+      {
+        "match": "(let|use)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s+)(\\=)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "variable.strict",
+          "3": "none.strict",
+          "4": "punctuation.strict"
+        }
+      },
+      {
+        "match": "(has)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s+)([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "variable.strict",
+          "3": "none.strict",
+          "4": "entity.name.type.strict"
+        }
+      },
+      {
+        "match": "(has)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)",
+        "captures": {
+          "0": "keyword.declaration.strict",
+          "1": "none.strict",
+          "2": "variable.strict"
+        }
+      },
+      {
+        "match": "(has)",
+        "captures": {
+          "0": "keyword.declaration.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Expressions": [
+      {
+        "include": "LetBinding"
+      },
+      {
+        "include": "CreateExpression"
+      },
+      {
+        "include": "Keyword"
+      },
+      {
+        "include": "MethodCall"
+      },
+      {
+        "match": "([a-zA-Z]+[a-zA-Z0-9_]*)(\\s+)(\\:)",
+        "captures": {
+          "0": "variable.other.strict",
+          "1": "none.strict",
+          "2": "punctuation.strict"
+        }
+      },
+      {
+        "match": "(\\.)([a-zA-Z]+[a-zA-Z0-9_]*)",
+        "captures": {
+          "0": "punctuation.strict",
+          "1": "variable.other.member.strict"
+        }
+      },
+      {
+        "include": "ExpressionList"
+      },
+      {
+        "include": "Operator"
+      },
+      {
+        "include": "Assignment"
+      },
+      {
+        "match": "([a-zA-Z][a-zA-Z0-9_\\x{003c}\\x{003e}\\[\\]\\?]*)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s+)(=)",
+        "captures": {
+          "0": "entity.name.type.strict",
+          "1": "none.strict",
+          "2": "variable.strict",
+          "3": "none.strict",
+          "4": "punctuation.strict"
+        }
+      },
+      {
+        "include": "Identifier"
+      },
+      {
+        "include": "NumberLiteral"
+      },
+      {
+        "include": "TextLiteral"
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "ExpressionList": [
+      {
+        "match": "(\\()",
+        "captures": {
+          "0": "punctuation.strict"
+        },
+        "push": [
+          {
+            "match": "(\\))",
+            "pop": true,
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "include": "ExpressionList"
+          },
+          {
+            "match": "(,)",
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Keyword": [
+      {
+        "match": "((continue|break|in|use|from|downto|return|to|for|if|else|yield)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))",
+        "captures": {
+          "0": "keyword.control.strict"
+        }
+      },
+      {
+        "match": "((import|factory|implement|with|has|returns|stream|generic|as|assert|test|create|throw|to|try|method|is|isnt|not|exists|let)(?!([a-zA-Z]+[a-zA-Z0-9_]*)))",
+        "captures": {
+          "0": "keyword.other.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Operator": [
+      {
+        "match": "([\\{\\}.\\x{002b}\\x{007c}\\-\\x{0028}\\x{0029}\\x{003c}\\x{003e}\\[\\]\\x{0021}\\x{003d}\\x{0025}\\x{002a}\\x{002c}\\x{003a}\\x{002f}]+)",
+        "captures": {
+          "0": "keyword.operator.strict"
+        }
+      },
+      {
+        "match": "(and|is|or|isnt|xor)",
+        "captures": {
+          "0": "keyword.operator.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Assignment": [
+      {
+        "match": "([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\=)",
+        "captures": {
+          "0": "variable.strict",
+          "1": "none.strict",
+          "2": "punctuation.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "MethodCall": [
+      {
+        "match": "(.)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\<.*\\>)?(\\s*)(\\()",
+        "captures": {
+          "0": "punctuation.strict",
+          "1": "entity.name.function.strict",
+          "2": "none.strict",
+          "3": "entity.name.type.strict",
+          "4": "none.strict",
+          "5": "punctuation.strict"
+        },
+        "push": [
+          {
+            "match": "(\\))",
+            "pop": true,
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "include": "main"
+          },
+          {
+            "match": "(,)",
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\<.*\\>)?(\\s*)(\\()",
+        "captures": {
+          "0": "entity.name.function.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict",
+          "3": "none.strict",
+          "4": "punctuation.strict"
+        },
+        "push": [
+          {
+            "match": "(\\))",
+            "pop": true,
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "include": "main"
+          },
+          {
+            "match": "(,)",
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "CreateExpression": [
+      {
+        "match": "(create)(\\s+)([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\()",
+        "captures": {
+          "0": "keyword.other.strict",
+          "1": "none.strict",
+          "2": "entity.name.type.strict",
+          "3": "punctuation.strict",
+          "4": "punctuation.strict"
+        },
+        "push": [
+          {
+            "match": "(\\))",
+            "pop": true,
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "match": "([a-zA-Z]+[a-zA-Z0-9_]*)(\\s*)(\\:)",
+            "captures": {
+              "0": "entity.other.attribute-name.strict",
+              "1": "none.strict",
+              "2": "punctuation.strict"
+            }
+          },
+          {
+            "include": "main"
+          },
+          {
+            "match": "(,)",
+            "captures": {
+              "0": "punctuation.strict"
+            }
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Identifier": [
+      {
+        "match": "(True|False|None|this)",
+        "captures": {
+          "0": "variable.language.strict"
+        }
+      },
+      {
+        "match": "([a-zA-Z][a-zA-Z0-9]*)",
+        "captures": {
+          "0": "variable.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "NumberLiteral": [
+      {
+        "match": "(\\b\\d+)",
+        "captures": {
+          "0": "constant.numeric.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "TextLiteral": [
+      {
+        "match": "(\")",
+        "captures": {
+          "0": "string.strict"
+        },
+        "push": [
+          {
+            "match": "(\\\")",
+            "pop": true,
+            "captures": {
+              "0": "string.strict"
+            }
+          },
+          {
+            "match": "(\\$)([a-zA-Z]+[a-zA-Z0-9_]*)",
+            "captures": {
+              "0": "meta.interpolation.strict",
+              "1": "meta.interpolation.strict"
+            }
+          },
+          {
+            "match": "(\\$)(\\()",
+            "captures": {
+              "0": "meta.interpolation.strict",
+              "1": "punctuation.section.interpolation.begin.strict"
+            },
+            "push": [
+              {
+                "match": "(\\))",
+                "pop": true,
+                "captures": {
+                  "0": "punctuation.section.interpolation.end.strict"
+                }
+              },
+              {
+                "include": "Expressions"
+              },
+              {
+                "match": "(.)",
+                "captures": {
+                  "0": "text.strict"
+                }
+              }
+            ]
+          },
+          {
+            "match": "(\\\\(?:\\\\|\"))",
+            "captures": {
+              "0": "string.strict"
+            }
+          },
+          {
+            "match": "([^\\x{0022}\\x{005c}])",
+            "captures": {
+              "0": "string.strict"
+            }
+          },
+          {
+            "match": "(.)",
+            "captures": {
+              "0": "text.strict"
+            }
+          }
+        ]
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ],
+    "Comment": [
+      {
+        "match": "(//.*)",
+        "captures": {
+          "0": "comment.line.strict"
+        }
+      },
+      {
+        "match": "(.)",
+        "captures": {
+          "0": "text.strict"
+        }
+      }
+    ]
+  }
+}
